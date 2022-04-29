@@ -1,0 +1,38 @@
+
+1: env:
+
+	1.1: prepare source code ,eg: ~/rk3566/
+	1.2: cp  rkbin file(for build image done)
+		mv rkbin  ~/rk3566/
+	1.3: SDDiskTool_v1.69.zip	 
+
+2: build:
+	cd ~/rk3566
+	./make.sh rk3566
+	./make.sh trust
+	cp trust.img rk3566_tool/Image/
+	cd  ~/rk3566/rk3566_tool
+	kernel build:make ARCH=arm64 rk3566.img -j12--------generate resource.img
+	cp resource.img ~/rk3566/rk3566_tool/Image
+	sudo ./rk3566-mkupdate.sh
+	
+	so,we get the update.image -->>>>(at rk3566_tool/update.img).
+	
+3: DownLoad image (prepare  get u-boot with GPT info)
+
+	new ,we need to downLoad update.img  by tool the "SDDiskTool_v1.69.zip" (need to run on windows system).
+
+	SD_Firmware_Tool.exe  
+    	"Fireware" of rk3566_tool/update.img 
+		choose  "Create"  to download
+	
+4: 	get sub image (get u-boot with GPT and  loader，then  build  all to batocera).
+	
+	sudo dd if=/dev/sdb of=uboot.img count=32768 bs=512---------------Obtain
+	sudo dd if=uboot.img of=/dev/sdb count=32768 bs=512---------------burn
+	
+	the u-boot.img is  we need.
+
+5: so ,we get the image uboot.img (with three  part , GPT+loader+u-boot.img),the image can  boot to kernel(pex,filesystem);
+	now  GPT  only contain  loader+uboot，if wonder add new partition ,need to modify  GPT。
+
