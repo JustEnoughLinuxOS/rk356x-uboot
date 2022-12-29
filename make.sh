@@ -624,6 +624,7 @@ function pack_uboot_image()
 function pack_loader_image()
 {
 	rm *_loader_*.bin -f
+        cp ./tools/boot_merger ${RKBIN}/tools/boot_merger
 	cd ${RKBIN}
 	${SCRIPT_LOADER} --ini ${INI_LOADER}
 	cd -
