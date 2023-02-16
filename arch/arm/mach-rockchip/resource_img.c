@@ -904,6 +904,9 @@ int rockchip_read_resource_dtb(void *fdt_addr, char **hash, int *hash_size)
 	*hash = file->hash;
 	*hash_size = file->hash_size;
 	printf("DTB: %s\n", file->name);
+	char * myfdtfile = strtok(file->name, "#");
+	strncat(myfdtfile,".dtb",4);
+	env_set("fdtfile", myfdtfile);
 
 	return 0;
 }

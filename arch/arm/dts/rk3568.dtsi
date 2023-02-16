@@ -2529,7 +2529,7 @@
 		pinctrl-names = "gpio", "otpout";
 		pinctrl-0 = <&tsadc_gpio>;
 		pinctrl-1 = <&tsadc_shutorg>;
-		status = "disabled";
+		status = "okay";
 	};
 
 	saradc: saradc@fe720000 {
@@ -2541,7 +2541,8 @@
 		clock-names = "saradc", "apb_pclk";
 		resets = <&cru SRST_P_SARADC>;
 		reset-names = "saradc-apb";
-		status = "disabled";
+		status = "okay";
+		u-boot,dm-pre-reloc;	
 	};
 
 	mailbox: mailbox@fe780000 {

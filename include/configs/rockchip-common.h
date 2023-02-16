@@ -90,17 +90,10 @@
 #ifdef __ANBERNIC_BOOT__
 #define PARTS_DEFAULT \
 	"uuid_disk=${uuid_gpt_disk};" \
-	"name=uboot,start=8MB,size=4MB,uuid=${uuid_gpt_loader2};" \
-	"name=resource,start=12MB,size=4MB,uuid=${uuid_gpt_resource};" \
-	"name=JELOS,start=16MB,size=3072M,bootable,uuid=${uuid_gpt_boot};\0"
-#else
-#define PARTS_DEFAULT \
-	"uuid_disk=${uuid_gpt_disk};" \
 	"name=loader1,start=32K,size=4000K,uuid=${uuid_gpt_loader1};" \
 	"name=loader2,start=8MB,size=4MB,uuid=${uuid_gpt_loader2};" \
-	"name=trust,size=4M,uuid=${uuid_gpt_atf};" \
-	"name=boot,size=112M,bootable,uuid=${uuid_gpt_boot};" \
-	"name=rootfs,size=-,uuid="ROOT_UUID
+	"name=resource,start=12MB,size=4MB,uuid=${uuid_gpt_resource};" \
+	"name=JELOS,start=16MB,size=3072M,bootable,uuid=${uuid_gpt_boot};\0"
 #endif
 
 #define PARTS_RKIMG \
