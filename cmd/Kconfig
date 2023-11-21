@@ -1711,4 +1711,18 @@ config CMD_UBIFS
 	help
 	  UBIFS is a file system for flash devices which works on top of UBI.
 
+menu "Anbernic commands"
+
+config CMD_ANBERNIC_ADC
+	bool "adc command - read saradc channel"
+	help
+	  saradc read support
+
+config CMD_ANBERNIC_HWREV
+	bool "hwrev command - check hw revision for anbernic board"
+	help
+	  This enables hw board check function for Anbernic board.
+
+endmenu
+
 endmenu

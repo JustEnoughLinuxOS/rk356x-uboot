@@ -175,6 +175,9 @@ obj-$(CONFIG_CMD_BLOB) += blob.o
 
 obj-$(CONFIG_ARCH_ROCKCHIP) += rkimgtest.o
 
+obj-$(CONFIG_CMD_ANBERNIC_ADC) += adc.o
+obj-$(CONFIG_CMD_ANBERNIC_HWREV) += hwrev.o
+
 endif # !CONFIG_SPL_BUILD
 
 # core command

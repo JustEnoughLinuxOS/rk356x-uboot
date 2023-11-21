@@ -453,6 +453,7 @@ int board_init(void)
 #endif
 	early_download();
 
+  run_command("hwrev", 0);
 	/*
 	 * pmucru isn't referenced on some platforms, so pmucru driver can't
 	 * probe that the "assigned-clocks" is unused.
