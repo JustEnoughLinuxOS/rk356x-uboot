@@ -763,10 +763,16 @@ show_images:
 			ret = rockchip_eink_show_charge_logo(logo_type);
 			/* Only change the logic if eink is acutally exist */
 			if (ret == 0) {
-				printf("battery FULL,exit charge animation\n");
+				printf("battery FULL, power off\n");
 				mdelay(20);
-				break;
+				pmic_shutdown(pmic);
 			}
+		}
+
+		if (charging <= 0 && pdata->auto_exit_charge) {
+			printf("Charger disconnected, powering off.");
+			mdelay(20);
+			pmic_shutdown(pmic);
 		}
 #endif
 		/* Step3: show images */
