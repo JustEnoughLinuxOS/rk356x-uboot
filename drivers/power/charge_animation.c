@@ -491,26 +491,26 @@ static int charge_animation_show(struct udevice *dev)
 #endif
 	charging = fg_charger_get_chrg_online(dev);
 	/* Not charger online and low power, shutdown */
-	if (charging <= 0 && pdata->auto_exit_charge) {
-		soc = fuel_gauge_update_get_soc(fg);
-		voltage = fuel_gauge_get_voltage(fg);
-		if (soc < pdata->exit_charge_level) {
-			printf("soc(%d%%) < exit_charge_level(%d%%)\n",
-			       soc, pdata->exit_charge_level);
-			exit_charge = true;
-		}
-		if (voltage < pdata->exit_charge_voltage) {
-			printf("voltage(%d) < exit_charge_voltage(%d)\n",
-			       voltage, pdata->exit_charge_voltage);
-			exit_charge = true;
-		}
-		if (exit_charge) {
-			printf("Not charging and low power, Shutdown...\n");
-			show_idx = IMAGE_LOWPOWER_IDX(image_num);
-			charge_show_bmp(image[show_idx].name);
-			mdelay(1000);
-			pmic_shutdown(pmic);
-		}
+        if (charging <= 0 && pdata->auto_exit_charge) {
+               soc = fuel_gauge_update_get_soc(fg);
+               voltage = fuel_gauge_get_voltage(fg);
+               if (soc < pdata->exit_charge_level) {
+                       printf("soc(%d%%) < exit_charge_level(%d%%)\n",
+                              soc, pdata->exit_charge_level);
+                       exit_charge = true;
+               }
+               if (voltage < pdata->exit_charge_voltage) {
+                       printf("voltage(%d) < exit_charge_voltage(%d)\n",
+                              voltage, pdata->exit_charge_voltage);
+                       exit_charge = true;
+               }
+               if (exit_charge) {
+                       printf("Not charging and low power, Shutdown...\n");
+                       show_idx = IMAGE_LOWPOWER_IDX(image_num);
+                       charge_show_bmp(image[show_idx].name);
+                       mdelay(1000);
+                       pmic_shutdown(pmic);
+               }
 	}
 
 	/* Not charger online, exit */
@@ -752,29 +752,20 @@ show_images:
 				}
 			}
 		}
-		/*
-		 * If battery capacity is charged to 100%, exit charging
-		 * animation and boot android system.
-		 */
-		if (soc >= 100) {
-			int ret;
-			int logo_type = EINK_LOGO_CHARGING_5;
+#endif
 
-			ret = rockchip_eink_show_charge_logo(logo_type);
-			/* Only change the logic if eink is acutally exist */
-			if (ret == 0) {
-				printf("battery FULL, power off\n");
-				mdelay(20);
-				pmic_shutdown(pmic);
-			}
-		}
+                if (soc >= 98) {
+			printf("battery FULL, power off\n");
+			mdelay(20);
+			pmic_shutdown(pmic);
+                }
 
-		if (charging <= 0 && pdata->auto_exit_charge) {
+                if (charging <= 0) {
 			printf("Charger disconnected, powering off.");
 			mdelay(20);
 			pmic_shutdown(pmic);
-		}
-#endif
+                }
+
 		/* Step3: show images */
 		if (screen_on) {
 			/* Don't call 'charge_show_bmp' unless image changed */
